@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // var blob = new Blob([data.Body]);
+        // let blobUrl = URL.createObjectURL(blob)
+        // if (err) {
+        //     _that.$message.error(err)
+        //     return
+        // }
+        // 保存到本地并自动点击
+        function saveAs(data, name) {
+            const urlObject = window.URL || window.webkitURL || window;
+            const export_blob = new Blob([data]);
+            const save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+            save_link.href = urlObject.createObjectURL(export_blob);
+            save_link.download = name;
+            save_link.click();
+            // let formData3 = new FormData()
+            // formData3.append('taskid', id);
+            // postAction(_that.downloadOver, formData3)
+        }
+        // 下载含有url的文件
+        function downloadUrlFile(url, fileName) {
+            const url2 = url.replace(/\\/g, '/');
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url2, true);
+            xhr.responseType = 'blob';
+            //xhr.setRequestHeader('Authorization', 'Basic a2VybWl0Omtlcm1pdA==');
+            // 为了避免大文件影响用户体验，建议加loading
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    // 获取文件blob数据并保存
+                    saveAs(xhr.response, fileName);
+                }
+            };
+            xhr.send();
+        }
+        // downloadUrlFile(blobUrl, name)
+        let url = "http://18.162.115.225:9091/attachments/chatim/room/20210214/246/43b4d5dd309ebcf6002a9bc89dafd740.html"
+        downloadUrlFile(url, "namez.html")
+    </script>
+</body>
+</html>

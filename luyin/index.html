@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+	<script>
+		var PageSet_RecordAppWxApi="";
+		var PageSet_RecordAppBaseFolder = "https://cdn.jsdelivr.net/gh/xiangyuecn/Recorder@latest/dist/";//使用dist目录内的文件小2/3
+	</script>
+	<script src="./record/native-config.js"></script>
+	<script src="./record/app-support-app.js"></script>
+	<style>
+		.recorder-wrapper {
+			margin-top: 10px;
+			padding: 20px;
+			border: 1px solid #00b894;
+		}
+		.phone {
+			margin: 0 auto;
+			padding: 55px 11px 53px;
+			width: 221px;
+			height: 448px;
+			font-size: 12px;
+			border-radius: 35px;
+			background-image: url("https://xiaotianxia.github.io/blog/vuepress/assets/img/iphone-bg1.bf9c75ef.png");
+			box-sizing: border-box;
+			user-select: none;
+		}
+		.phone-body {
+			height: 100%;
+			background-color: #fff;
+		}
+		.phone-head {
+			height: 30px;
+			line-height: 30px;
+			color: #fff;
+			font-weight: bold;
+			background-color: #000;
+		}
+		.phone-head span {
+			display: inline-block;
+		}
+		.phone-head span:nth-child(2) {
+			width: 100px;
+			text-align: center;
+		}
+		.phone-head span:nth-child(3) {
+			float: right;
+			margin-right: 10px;
+		}
+		.phone-content {
+			height: 282px;
+			background-color: #f1eded;
+		}
+		.phone-operate {
+			position: relative;
+			line-height: 28px;
+			text-align: center;
+			cursor: pointer;
+			font-weight: bold;
+			box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.1);
+		}
+		.phone-operate:active {
+			background-color: #95a5a6;
+		}
+		.phone-operate:active:before {
+			position: absolute;
+			left: 50%;
+			transform: translate(-50%, 0);
+			top: -2px;
+			content: "";
+			width: 0%;
+			height: 2px;
+			background-color: #7bed9f;
+			animation: loading 1s ease-in-out infinite backwards;
+		}
+		.msg-list {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+		.msg-list::-webkit-scrollbar {
+			display: none;
+		}
+		.msg-list .msg {
+			list-style: none;
+			padding: 0 8px;
+			margin: 10px 0;
+			overflow: hidden;
+			cursor: pointer;
+		}
+		.msg-list .msg .avatar,
+		.msg-list .msg .audio,
+		.msg-list .msg .duration {
+			float: right;
+		}
+		.msg-list .msg .avatar {
+			width: 24px;
+			height: 24px;
+			line-height: 24px;
+			text-align: center;
+			background-color: #000;
+			background: url("https://denzel.netlify.com/hero.png") 0 0;
+			background-size: 100%;
+		}
+		.msg-list .msg .audio {
+			position: relative;
+			margin-right: 6px;
+			max-width: 116px;
+			min-width: 30px;
+			height: 24px;
+			line-height: 24px;
+			padding: 0 4px 0 10px;
+			border-radius: 2px;
+			color: #000;
+			text-align: right;
+			background-color: rgba(107, 197, 107, 0.85);
+		}
+		.msg-list .msg.eg {
+			cursor: default;
+		}
+		.msg-list .msg.eg .audio {
+			text-align: left;
+		}
+		.msg-list .msg .audio:before {
+			position: absolute;
+			right: -8px;
+			top: 8px;
+			content: "";
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 4px;
+			border-color: transparent transparent transparent
+				rgba(107, 197, 107, 0.85);
+		}
+		.msg-list .msg .audio span {
+			color: rgba(255, 255, 255, 0.8);
+			display: inline-block;
+			transform-origin: center;
+		}
+		.msg-list .msg .audio span:nth-child(1) {
+			font-weight: 400;
+		}
+		.msg-list .msg .audio span:nth-child(2) {
+			transform: scale(0.8);
+			font-weight: 500;
+		}
+		.msg-list .msg .audio span:nth-child(3) {
+			transform: scale(0.5);
+			font-weight: 700;
+		}
+		.msg-list .msg .audio.wink span {
+			animation: wink 1s ease infinite;
+		}
+		.msg-list .msg .duration {
+			margin: 3px 2px;
+		}
+		.fade-enter-active,
+		.fade-leave-active {
+			transition: opacity 0.5s;
+		}
+		.fade-enter,
+		.fade-leave-to {
+			opacity: 0;
+		}
+		@keyframes wink {
+			from {
+				color: rgba(255, 255, 255, 0.8);
+			}
+			to {
+				color: rgba(255, 255, 255, 0.1);
+			}
+		}
+		@keyframes loading {
+			from {
+				width: 0%;
+			}
+			to {
+				width: 100%;
+			}
+		}
+	</style>
+	<body>
+		<div id="app">
+			<div class="recorder-wrapper">
+				<div class="phone">
+					<div class="phone-body">
+						<div class="phone-head">
+							<span>&lt; 微信(66)</span>
+							<span>哈哈哈</span>
+							<span>···</span>
+						</div>
+						<div class="phone-content">
+							<transition-group
+								tag="ul"
+								class="msg-list"
+								name="fade"
+							>
+								<li class="msg eg" :key="-1">
+									<div class="avatar"></div>
+									<div class="audio">说话</div>
+								</li>
+
+								<li
+									v-for="(item, index) in radioList"
+									:key="index"
+									class="msg"
+									@click="onPlay(index)"
+									@touchend.prevent="onPlay(index)"
+								>
+									<div class="avatar"></div>
+									<div
+										v-cloak
+										class="audio"
+										:style="{width: 20 * item.duration + 'px'}"
+										:class="{wink: item.wink}"
+									>
+										<span>(</span><span>(</span
+										><span>(</span>
+									</div>
+									<div class="duration">
+										{{item.duration}}"
+									</div>
+								</li>
+							</transition-group>
+						</div>
+						<div
+							class="phone-operate"
+							@mousedown="onMousedown"
+							@touchstart.prevent="onMousedown"
+							@mouseup="onMouseup"
+							@touchend.prevent="onMouseup"
+						>
+							{{btnText}}
+						</div>
+					</div>
+				</div>
+				<audio ref="audio"></audio>
+				<div @click="recPlay">播放</div>
+				<div @click="recUpload">上传</div>
+				<!-- 日志输出区域 -->
+				<div class="mainBox">
+					<div class="reclog"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<!-- 【3】实现录音逻辑 -->
+	<script>
+		var reclog = function (s,color){
+			var now=new Date();
+			var t=("0"+now.getHours()).substr(-2)
+				+":"+("0"+now.getMinutes()).substr(-2)
+				+":"+("0"+now.getSeconds()).substr(-2);
+			var div=document.createElement("div");
+			var elem=document.querySelector(".reclog");
+			elem.insertBefore(div,elem.firstChild);
+			div.innerHTML='<div style="color:'+(!color?"":color==1?"red":color==2?"#0b1":color)+'">['+t+']'+s+'</div>';
+			console.log(s,'str')
+		}
+		//recReq我们可以选择性的弹一个对话框：为了防止移动端浏览器存在第三种情况：用户忽略，并且（或者国产系统UC系）浏览器没有任何回调
+		var showDialog=function(){
+			if(!/mobile/i.test(navigator.userAgent)){
+				return;//只在移动端开启没有权限请求的检测
+			};
+			// dialogCancel();
+			
+			//显示弹框，应该使用自己的弹框方式
+			var div=document.createElement("div");
+			document.body.appendChild(div);
+			div.innerHTML=(''
+				+'<div class="waitDialog" style="z-index:99999;width:100%;height:100%;top:0;left:0;position:fixed;background:rgba(0,0,0,0.3);">'
+					+'<div style="display:flex;height:100%;align-items:center;">'
+						+'<div style="flex:1;"></div>'
+						+'<div style="width:240px;background:#fff;padding:15px 20px;border-radius: 10px;">'
+							+'<div style="padding-bottom:10px;">录音功能需要麦克风权限，请允许；如果未看到任何请求，请点击忽略~</div>'
+							+'<div style="text-align:center;"><a onclick="waitDialogClick()" style="color:#0B1">忽略</a></div>'
+						+'</div>'
+						+'<div style="flex:1;"></div>'
+					+'</div>'
+				+'</div>');
+		};
+		
+		var dialogInt;
+		var dialogCancel=function(){
+			clearTimeout(dialogInt);
+			
+			//关闭弹框，应该使用自己的弹框方式
+			var elems=document.querySelectorAll(".waitDialog");
+			for(var i=0;i<elems.length;i++){
+				elems[i].parentNode.removeChild(elems[i]);
+			};
+		};
+		var rec,wave,recBlob;
+
+		//recReq弹框End
+		new Vue({
+			el: "#app",
+			data() {
+				return {
+					chunks: [],
+					chunkList: [],
+					btnText: "按住说话",
+					isVoi: false,
+					radioList: [], // 语音src 根据index赋值
+				};
+			},
+			mounted() {
+				this.audio = this.$refs.audio;
+				this.recReq()
+			},
+			methods: {
+				// requestAudioAccess() {
+				// 	navigator.mediaDevices.getUserMedia({ audio: true }).then(
+				// 		(stream) => {
+				// 			this.recorder = new window.MediaRecorder(stream);
+				// 			this.bindEvents();
+				// 		},
+				// 		(error) => {
+				// 			alert("出错，请确保已允许浏览器获取录音权限");
+				// 		}
+				// 	);
+				// },
+
+				onMousedown() {
+					this.onStart();
+					this.btnText = "松开结束";
+				},
+
+				onMouseup() {
+					this.onStop();
+					this.btnText = "按住说话";
+				},
+
+				onStart() {
+					// this.recorder.start();
+					this.recReq()
+					this.recStart()
+				},
+
+				onStop() {
+					// this.recorder.stop();
+					this.recStop()
+					// recPlay()
+				},
+
+				onPlay(index) {
+					// this.recPlay()
+
+					// this.chunkList.forEach((item) => {
+					// 	this.$set(item, "wink", false);
+					// });
+
+					// let item = this.chunkList[index];
+					// this.audio.src = item.stream;
+					// this.audio.play();
+
+					// this.bindAudioEvent(index);
+
+					this.radioList.forEach((item) => {
+						this.$set(item, "wink", false);
+					});
+
+					this.audio.controls=true;
+					this.audio.src= this.radioList[index].src
+					this.audio.play();
+					this.bindAudioEvent(index);
+				},
+
+				bindAudioEvent(index) {
+					// let item = this.chunkList[index];
+					let item = this.radioList[index];
+
+					this.audio.onplaying = () => {
+						this.$set(item, "wink", true);
+					};
+
+					this.audio.onended = () => {
+						this.$set(item, "wink", false);
+					};
+				},
+
+				bindEvents() {
+					this.recorder.ondataavailable = this.getRecordingData;
+					this.recorder.onstop = this.saveRecordingData;
+				},
+
+				getRecordingData(e) {
+					this.chunks.push(e.data);
+				},
+
+				saveRecordingData() {
+					let blob = new Blob(this.chunks, {
+							type: "audio/ogg; codecs=opus",
+						}),
+						audioStream = URL.createObjectURL(blob),
+						//估算时长
+						duration = parseInt(blob.size / 6600);
+					if (duration <= 0) {
+						alert("说话时间太短");
+						return;
+					}
+					if (duration > 60) {
+						duration = 60;
+					}
+					this.chunkList.push({
+						duration: duration,
+						stream: audioStream,
+					});
+					this.chunks = [];
+				},
+				
+				/**调用RequestPermission打开录音请求好录音权限**/
+				recReq (){//一般在显示出录音按钮或相关的录音界面时进行此方法调用，后面用户点击开始录音时就能畅通无阻了
+					rec=false;
+					reclog("正在打开录音，请稍后...");
+					RecordApp.RequestPermission(function(){
+						rec=true;
+						this.isVoi=true;
+						// dialogCancel(); //如果开启了弹框，此处需要取消
+						reclog("已打开录音，可以点击录制开始录音了",2);
+					},function(err,isUserNotAllow){
+						// dialogCancel(); //如果开启了弹框，此处需要取消
+						reclog((isUserNotAllow?"UserNotAllow，":"")+"打开录音失败："+err,1);
+					});
+					
+					
+					window.waitDialogClick=function(){
+						// dialogCancel();
+						reclog("打开失败：权限请求被忽略，<span style='color:#f00'>用户主动点击的弹窗</span>",1);
+					};
+				},
+				/**开始录音**/
+				recStart(){
+					if(!rec|| !RecordApp.Current){
+						reclog("未请求权限", 1);
+						return;
+					};
+					console.log(rec,RecordApp.Current,"开始录音")
+					
+					if(RecordApp.Current==RecordApp.Platforms.Weixin){
+						reclog("正在使用微信JsSDK，录音过程中不会有任何回调，不要惊慌");
+					}else if(RecordApp.Current==RecordApp.Platforms.Native){
+						reclog("正在使用Native录音，底层由App原生层提供支持");
+					}else{
+						reclog("正在使用H5录音，底层由Recorder直接提供支持");
+					};
+					
+					var set={
+						type:"mp3"
+						,bitRate:16
+						,sampleRate:16000
+						,onProcess:function(buffers,powerLevel,bufferDuration,bufferSampleRate,newBufferIdx,asyncEnd){
+						// 	//录音实时回调，大约1秒调用12次本回调
+						// 	document.querySelector(".recpowerx").style.width=powerLevel+"%";
+						// 	document.querySelector(".recpowert").innerText=bufferDuration+" / "+powerLevel;
+							
+						// 	//可视化图形绘制
+						// 	wave.input(buffers[buffers.length-1],powerLevel,bufferSampleRate);
+						}
+					};
+					
+					wave=null;
+					recBlob=null;
+					RecordApp.Start(set,function(){
+						reclog(RecordApp.Current.Key+"录制中:"+set.type+" "+set.bitRate+"kbps",2);
+						
+						//此处创建这些音频可视化图形绘制浏览器支持妥妥的
+						// wave=Recorder.FrequencyHistogramView({elem:".recwave"});
+					},function(err){
+						reclog(RecordApp.Current.Key+"开始录音失败："+err,1);
+					});
+				},
+				/**结束录音，得到音频文件**/
+				recStop(){
+					if(!rec|| !RecordApp.Current){
+						reclog("未请求权限", 1);
+						return;
+					};
+					
+					RecordApp.Stop((blob,duration)=>{
+						console.log(blob,(window.URL||webkitURL).createObjectURL(blob),"时长:"+duration+"ms");
+						
+						recBlob=blob;
+						reclog("已录制mp3："+duration+"ms "+blob.size+"字节，可以点击播放、上传了",2);
+						console.log(recBlob,"recBlob")
+
+						let src = (window.URL||webkitURL).createObjectURL(recBlob);
+						this.radioList.push({src,duration,wink:false})
+						console.log(this.radioList,"radioList")
+					},function(msg){
+						reclog("录音失败:"+msg,1);
+					});
+				},
+				/**播放**/
+				recPlay(){
+					if(!recBlob){
+						reclog("请先录音，然后停止后再播放",1);
+						return;
+					};
+					var cls=("a"+Math.random()).replace(".","");
+					reclog('播放中: <span class="'+cls+'"></span>');
+					var audio=document.createElement("audio");
+					audio.controls=true;
+					console.log(123456,audio,document.querySelector("."+cls))
+					document.querySelector("."+cls).appendChild(audio);
+					//简单利用URL生成播放地址，注意不用了时需要revokeObjectURL，否则霸占内存
+					audio.src=(window.URL||webkitURL).createObjectURL(recBlob);
+					audio.play();
+					
+					setTimeout(function(){
+						(window.URL||webkitURL).revokeObjectURL(audio.src);
+					},5000);
+				},
+				/**上传**/
+				recUpload(){
+					var blob=recBlob;
+					if(!blob){
+						reclog("请先录音，然后停止后再上传",1);
+						return;
+					};
+					
+					//本例子假设使用原始XMLHttpRequest请求方式，实际使用中自行调整为自己的请求方式
+					//录音结束时拿到了blob文件对象，可以用FileReader读取出内容，或者用FormData上传
+					var api="https://xx.xx/test_request";
+					var onreadystatechange=function(title){
+						return function(){
+							if(xhr.readyState==4){
+								if(xhr.status==200){
+									reclog(title+"上传成功",2);
+								}else{
+									reclog(title+"没有完成上传，演示上传地址无需关注上传结果，只要浏览器控制台内Network面板内看到的请求数据结构是预期的就ok了。", "#d8c1a0");
+									
+									console.error(title+"上传失败",xhr.status,xhr.responseText);
+								};
+							};
+						};
+					};
+					reclog("开始上传到"+api+"，请求稍后...");
+
+					/***方式一：将blob文件转成base64纯文本编码，使用普通application/x-www-form-urlencoded表单上传***/
+					var reader=new FileReader();
+					reader.onloadend=function(){
+						var postData="";
+						postData+="mime="+encodeURIComponent(blob.type);//告诉后端，这个录音是什么格式的，可能前后端都固定的mp3可以不用写
+						postData+="&upfile_b64="+encodeURIComponent((/.+;\s*base64\s*,\s*(.+)$/i.exec(reader.result)||[])[1]) //录音文件内容，后端进行base64解码成二进制
+						//...其他表单参数
+						
+						var xhr=new XMLHttpRequest();
+						xhr.open("POST", api);
+						xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+						xhr.onreadystatechange=onreadystatechange("上传方式一【Base64】");
+						xhr.send(postData);
+					};
+					reader.readAsDataURL(blob);
+
+					/***方式二：使用FormData用multipart/form-data表单上传文件***/
+					var form=new FormData();
+					form.append("upfile",blob,"recorder.mp3"); //和普通form表单并无二致，后端接收到upfile参数的文件，文件名为recorder.mp3
+					//...其他表单参数
+					
+					var xhr=new XMLHttpRequest();
+					xhr.open("POST", api);
+					xhr.onreadystatechange=onreadystatechange("上传方式二【FormData】");
+					xhr.send(form);
+				},
+
+
+				
+
+				readyOriginal () {
+					if (!this.isVoice) {
+					// <!-- 开启录音 -->
+						recorder && recorder.start();
+						this.isVoice = true
+					} else {
+						this.isVoice = false
+						// <!-- 结束录音 -->
+						recorder && recorder.stop();
+						// setTimeout(()=> {
+						//     // <!-- 录音上传 -->
+						//     var mp3Blob = recorder.upload();
+						//     var fd = new FormData();
+						//     fd.append('audio', mp3Blob);
+						//     this.$http({
+						//         header: ({
+						//             'Content-Type': 'application/x-www-form-urlencodeed'
+						//         }),
+						//         method: 'POST',
+						//         url: 'url',
+						//         data: fd,
+						//         withCredentials: true,
+						//     }).then((res) => { 
+						//         // 这里做登录拦截
+						//         if (res.data.isLogin === false) {
+						//             router.replace('/login');
+						//         } else {
+						//             if (res.data.status === 200) {
+						//             console.log('保存成功')
+						//             } else {
+						//             this.returnmsg = '上传失败'
+						//             }
+						//         }
+						//     })
+						// },1000)
+					}
+				},
+				
+			},
+			
+
+			
+		});
+	</script>
+	<script src="./record/recorder-core.js"></script>
+	<script src="./record/mp3.js"></script>
+</html>

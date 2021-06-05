@@ -44,7 +44,7 @@
 				$fixedHeader.css("height", $self.find("thead").outerHeight());
 				$fixedHeader.css("width", $self.find("thead").outerWidth());
 				// $fixedHeader.css("top", "0px");
-				$fixedHeader.css("margin-top", "-40px");
+				// $fixedHeader.css("margin-top", "-40px");
 				$fixedHeader.css("z-index", 1);
 				// $fixedHeader.removeClass("vishide")
 
@@ -56,9 +56,9 @@
 					$(item).css("max-height", parseInt(originalHeight[key], 10));
 				});
 				// $originalHeader.after($fixedHeader);
-                $originalHeader.addClass("vishide");
-                $originalHeader.hide();
-                $(".conttents").before($fixedHeader);
+                // $originalHeader.hide();
+                // $originalHeader.addClass("vishide");
+                $(".tab-twos").before($fixedHeader);
                 $fixedHeader.show();
 			}
 			function fixSize() {
@@ -84,8 +84,8 @@
 				// $originalHeader.addClass("vishide");
 
 			}
-            $(".col-centered").scroll(function () {
-				console.log("scroller: ", $(this).scrollLeft());
+            $(".tab-ones").scroll(function () {
+				console.log("scroller: ", $(this).scrollLeft(), $(this).scrollTop());
 				$fixedHeader.css({
 					transform: "translateX(-" + $(this).scrollLeft() + "px)",
 				});

@@ -7,6 +7,10 @@
  */
 /*jslint browser: true, nomen: true, unparam: true, node: true*/
 /*global $, jQuery*/
+
+// $(".tab-ones") 横向滚动时 判断 y轴 是否大于0，大于0则展示固定fixed
+// $(".tab-ones") 纵向滚动时 判断 y轴 是否大于0，大于0则展示固定fixed
+
 "use strict";
 (function ($) {
     var timer; // 维护同一个timer
@@ -92,6 +96,18 @@
 				// $self.css({
 				// 	transform: "translateY(-" + $(this).scrollTop() + "px)",
 				// });
+
+                if($(this).scrollTop()>40){
+                    $originalHeader.addClass("pos-fixed");
+                }else if ($(this).scrollTop()<40) {
+					$originalHeader.removeClass("pos-fixed");
+                    $originalHeader.css({
+                        transform: "translateY(-" + $(this).scrollTop() + "px)",
+                    });
+				}
+
+
+                $originalHeader;
 			});
             $self.scroll(function () {
 				console.log('table-x-scroll');

@@ -55,13 +55,15 @@
                 $fixedHeader.find("th").each(function (key, item) {
 					$(item).css("min-width", parseInt(originalWidth[key], 10));
 					$(item).css("max-width", parseInt(originalWidth[key], 10));
+                    $(item).css("width", parseInt(originalWidth[key], 10));
 
                     $(item).css("min-height", parseInt(originalHeight[key], 10));
 					$(item).css("max-height", parseInt(originalHeight[key], 10));
+                    $(item).css("height", parseInt(originalHeight[key], 10));
 				});
 				// $originalHeader.after($fixedHeader);
                 // $originalHeader.hide();
-                // $originalHeader.addClass("vishide");
+                $originalHeader.addClass("vishide");
                 $(".tab-twos").before($fixedHeader);
                 $fixedHeader.show();
 			}
@@ -80,8 +82,10 @@
                     var outTh = $originalHeader.find("th").eq(key);
                     $(item).css("min-width", outTh.outerWidth() + "px");
                     $(item).css("max-width", outTh.outerWidth() + "px");
+                    $(item).css("width", outTh.outerWidth() + "px");
                     $(item).css("min-height", outTh.outerHeight() + "px");
 					$(item).css("max-height", outTh.outerHeight() + "px");
+                    $(item).css("height", outTh.outerHeight() + "px");
 				});
 				// $originalHeader.after($fixedHeader);
 				$fixedHeader.show();
@@ -93,21 +97,6 @@
 				$fixedHeader.css({
 					transform: "translateX(-" + $(this).scrollLeft() + "px)",
 				});
-				// $self.css({
-				// 	transform: "translateY(-" + $(this).scrollTop() + "px)",
-				// });
-
-                if($(this).scrollTop()>40){
-                    $originalHeader.addClass("pos-fixed");
-                }else if ($(this).scrollTop()<40) {
-					$originalHeader.removeClass("pos-fixed");
-                    $originalHeader.css({
-                        transform: "translateY(-" + $(this).scrollTop() + "px)",
-                    });
-				}
-
-
-                $originalHeader;
 			});
             $self.scroll(function () {
 				console.log('table-x-scroll');

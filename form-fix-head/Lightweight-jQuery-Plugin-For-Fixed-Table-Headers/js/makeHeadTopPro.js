@@ -75,7 +75,7 @@
 				$fixedHeader.css("display", "none");
 				$fixedHeader.css("height", $self.find("thead").outerHeight());
 				$fixedHeader.css("width", $self.find("thead").outerWidth());
-				$fixedHeader.css("margin-top", "-40px");
+				// $fixedHeader.css("margin-top", "-40px");
 				$fixedHeader.css("z-index", 1);
 
 				$fixedHeader.find("th").each(function (key, item) {

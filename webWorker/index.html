@@ -32,7 +32,7 @@
 		setTimeout(function () {
 			// 通信：向子线程发送消息
 			worker.postMessage('start')
-		}, 2000)
+		}, 1000)
 		worker.addEventListener('message', function(res) {
 			//  通信：收到子线程消息
 			console.log('result:',JSON.stringify(res.data));
@@ -42,6 +42,20 @@
 		document.getElementsByClassName("box")[0].addEventListener('click', function () {
 			console.log('click')
 		})
+
+		// 再创建一个worker实例
+		var feeWorker = new Worker('./fee.js')
+		setTimeout(function () {
+			// 通信：向子线程发送消息
+			feeWorker.postMessage('getIt')
+		}, 2000)
+		feeWorker.addEventListener('message', function (res) {
+			//  通信：收到子线程消息
+			console.log('收到子线程消息result:', JSON.stringify(res.data));
+			// 关闭worker线程
+			feeWorker.terminate();
+		})
+
 	}
 </script>
 </html>

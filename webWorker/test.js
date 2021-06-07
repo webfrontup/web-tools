@@ -23,4 +23,9 @@ addEventListener('message', function(res) {
 		console.log('运算完毕,发送消息给主线程！')
 		this.postMessage(count);
 	}
+
+	// 收到主线程消息，开始运算
+	// test.js:21 运算时间：: 1575.906005859375 ms
+	// test.js:23 运算完毕,发送消息给主线程！
+	// (index):38 result: 102334155
 })

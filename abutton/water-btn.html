@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .waterButton {
+  height: 27rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.good {
+  width: 6rem;
+  height: 6rem;
+  position: relative;
+}
+.good_btn {
+  width: 6rem;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  z-index: 3;
+  cursor: pointer;
+  box-shadow: .4rem .4rem .8rem #c8d0e7,-.4rem -.4rem .8rem #fff;
+}
+img{
+  width: 50%;
+  height: 50%;
+  z-index: 4;
+}
+.good_water-1, .good_water-2 {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0 ;
+  filter: blur(1px);
+}
+.good_water-1 {
+  box-shadow: .4rem .4rem .8rem #c8d0e7, 
+  -.4rem -.4rem .8rem #fff;
+  /*animation: waves 2s linear;*/
+  animation: waves 2s linear infinite;
+}
+.good_water-2 {
+  box-shadow: .4rem .4rem .8rem #c8d0e7, 
+  -.4rem -.4rem .8rem #fff;
+  animation: waves 2s linear 1s;
+}
+@keyframes waves {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+</style>
+<body>
+    <div class="waterButton">
+        <div class="good">
+            <div class="good_btn" id="waterButton">
+                <img src="./good.png" alt="">
+            </div>
+            <span id="water1"></span>
+            <span id="water2"></span>
+        </div>
+    </div>
+    <script>
+        let btn = document.getElementById('waterButton')
+        let water1 = document.getElementById('water1')
+        let water2 = document.getElementById('water2')
+        let timer = ''
+        btn.addEventListener('click', () => {
+            window.clearTimeout(timer)
+            water1.classList.add("good_water-1");
+            water2.classList.add("good_water-2");
+            setTimeout(() => {
+                water1.classList.remove("good_water-1");
+                water2.classList.remove("good_water-2");
+            }, 3000)
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>中秋</title>
+  <link rel="stylesheet" href="css/index.css" type="text/css" />
+</head>
+
+<body>
+  <canvas id="stars"></canvas>
+  <div class='containier background' id='containier'>
+        <div class="title-container">
+            <div class="sprite title-moon">
+              <img style="height: 80px;width: 80px;" src='images/change.gif' class='change' />
+            </div>
+            <div class="sprite title-flower-l"></div>
+            <div class="sprite title-flower-r"></div>
+        </div>
+        <div class='award-btn'>
+          <button onclick="removeClass(0)">规则列表</button>
+          <button onclick="removeClass(1)">奖品列表</button>
+        </div>
+        <div class="guize-list removeClass"></div>
+        <div class="award-list"></div>
+        <div class="bowl-container">
+            <div class="sprite bowl inline" id="bowl">
+                <div class="sprite dice dice-position1"></div>
+                <div class="sprite dice dice-position2"></div>
+                <div class="sprite dice dice-position3"></div>
+                <div class="sprite dice dice-position4"></div>
+                <div class="sprite dice dice-position5"></div>
+                <div class="sprite dice dice-position6"></div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <div class="sprite button button-start" id="startGame"></div>
+        </div>
+        <div class="award-container">
+            <div class="award-item"></div>
+        </div>
+  </div>
+</body>
+<script src="js/jquery-1.11.0.min.js"></script>
+<script src='js/index.js'></script>
+
+</html>

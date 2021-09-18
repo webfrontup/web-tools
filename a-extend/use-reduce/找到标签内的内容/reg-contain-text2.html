@@ -1,0 +1,41 @@
+<!--<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>htmlToWord</title>
+	<script>
+		var str = '<p style="color:red;font-size:23px;">dsafjskdsafh斯柯达花费多少空间</p><p>http://files.cnblogs.com/files/wj204/ali.gif</p>";'
+            console.log(str.match(/<([a-zA-Z1-6]+)(\s*[^>]*)?>/g))
+            console.log(str.replace(/<([a-zA-Z1-6]+)(\s*[^>]*)?>/g, "<$1>"))
+            //<p>dsafjskdsafh斯柯达花费多少空间</p><p>http://files.cnblogs.com/files/wj204/ali.gif</p>";
+            var str2 = str.replace(/<([a-zA-Z1-6]+)(\s*[^>]*)?>/g, "<$1>");
+            console.log(str2.match(/<p>(.*?)<\/p>/g))
+            console.log(str2.replace(/<p>(.*?)<\/p>/g, '<span style="font-size:12pt;color: reb(0,0,0)">$1</span>'))
+	</script>
+</head>
+<body>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>htmlToWord</title>
+    <script>
+        var str = '<p style="color:red;font-size:23px;"><1234>dsafjskdsafh斯柯达花费多少空间<232/></p><p>http://files.cnblogs.com/files/wj204/ali.gif</p>";'
+        console.log(str.match(/<([a-zA-Z1-9]+)(\s*[^>]*)?>/g))
+        console.log(str.replace(/<([a-zA-Z1-9]+)(\s*[^>]*)?>/g, "<$1>")) // 清空元素属性值
+        //<p>dsafjskdsafh斯柯达花费多少空间</p><p>http://files.cnblogs.com/files/wj204/ali.gif</p>";
+        var str2 = str.replace(/<([a-zA-Z1-9]+)(\s*[^>]*)?>/g, "<$1>");
+        console.log(str2.match(/<p>(.*?)<\/p>/g)) // 获取元素innerHTML
+        console.log(str2.replace(/<p>(.*?)<\/p>/g, '<span style="font-size:12pt;color: reb(0,0,0)">$1</span>')) // 更新元素属性
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

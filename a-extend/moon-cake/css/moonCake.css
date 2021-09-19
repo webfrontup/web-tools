@@ -1,0 +1,181 @@
+
+  body{
+    margin:0;
+    padding:0;
+  }
+  div {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  .outerPack,.content,.top{
+    width: 200px;
+    height: 200px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    position: relative;
+    /* 将子元素转为3D */
+    transform-style: preserve-3d; 
+    transition: all 5s linear;
+  }
+  .outerPack{
+    /* 让外包装整体向下转45度,向右转45度 */
+    transform: rotateX(-45deg) rotateY(225deg); 
+    animation: outerPack 1s  linear;
+    animation-fill-mode:forwards;
+  }
+  .outerPack li {
+    width: 200px;
+    height: 100px;
+    text-align: center;
+    line-height: 200px;
+    position: absolute; /*让所有的子元素都重叠在一起*/
+    box-sizing: border-box;
+    border: 1px solid #2b2213;
+    left: 0;
+    right: 0;
+    background-color: #2b2213;
+  }
+  /* 背面 */
+  .outerPack li:nth-child(1) {
+    height: 100px;
+    transform: translateZ(100px) translateY(-50px); 
+    background-size: cover;
+  }
+  /* 正面 */
+  .outerPack li:nth-child(2) {
+    height: 100px;
+    transform: translateZ(-100px) translateY(-50px);
+    background-size: cover;
+    border: 1px solid #55545c;
+    background-color: #211b14;
+  }
+  /*右面*/
+  .outerPack li:nth-child(3) {
+    height: 100px;
+    transform: rotateY(-90deg) translateZ(100px) translateY(-50px);
+    background-size: cover;
+  }
+  /*左面*/
+  .outerPack li:nth-child(4) {
+    height: 100px;
+    transform: rotateY(90deg) translateZ(100px) translateY(-50px);
+    background-size: cover;
+  }
+  /* 上面 */
+  .outerPack li:nth-child(5) {
+    height: 200px;
+    transform: rotateX(-90deg) translateZ(-151px);
+    background-size: cover;
+    border: 1px solid #55545c;
+    padding: 10px;
+
+  }
+  /*下面*/
+  .outerPack li:nth-child(6) {
+    height: 200px;
+    transform: rotateX(-90deg) translateZ(-50px); 
+    background-size: cover;
+  }
+  .outerPack li:nth-child(5) img{
+    width: 100%;
+    height: 100%;
+  }
+  .top{
+    z-index: 3;
+    transform: rotateX(-135deg) rotateY(225deg)  translateY(282px); 
+    animation: top 3s  linear;
+    animation-fill-mode:forwards;
+  }
+
+  .top li{
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #2b2213;
+    border: 1px solid #55545c;
+    transform: rotateX(-90deg) translateZ(150px) rotateY(180deg);
+  }
+  .top li img{
+    width: 100%;
+    height: 100%;
+  }
+  .content{
+    z-index: 2;
+    /* 让内部月饼整体向下转45度,向右转45度 */
+    transform: rotateX(-45deg) rotateY(225deg)  translateY(280px); 
+    animation: content 2s  linear;
+    animation-fill-mode:forwards;
+  }
+  .content li {
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    line-height: 200px;
+    position: absolute; /*让所有的子元素都重叠在一起*/
+    box-sizing: border-box;
+    border: 1px solid #2b2213;
+    left: 0;
+    right: 0;
+    background-color: #2b2213;
+  }
+   /*背面*/
+   .content li:nth-child(1) {
+    transform: translateY(-50px) translateZ(100px);
+    background-size: cover;
+  }
+  /*正面*/
+  .content li:nth-child(2) {
+    height: 54px;
+    transform:translateY(-50px)  translateZ(-100px);
+    background-size: cover;
+    border: 1px solid #55545c;
+    background-color: #211b14;
+  }
+  /*右面*/
+  .content li:nth-child(3) {
+    transform: rotateY(-90deg) translateZ(100px) translateY(-50px);
+    background-size: cover;
+  }
+  .content li:nth-child(4) {
+    transform: rotateY(90deg) translateZ(100px) translateY(-50px);/*左面*/
+    background-size: cover;
+  }
+  .content li:nth-child(5) {
+    height: 200px;
+    transform: rotateX(-90deg) translateZ(-100px);/*下面*/
+    background-size: cover;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px 0 30px;
+  }
+  .content li:nth-child(5) img{
+    width: 40px;
+    height: 100%;
+    transform:rotateY(180deg);
+  }
+  .moveOut{
+    animation: moveOut 1s  linear!important;
+    animation-fill-mode:forwards!important;
+  }
+
+  @keyframes moveOut{
+    0%{ transform: rotateX(-45deg) rotateY(225deg) translateY(280px); }
+    50%{ transform: rotateX(-45deg) rotateY(225deg) translateY(280px) translateZ(-100px); }
+    100%{ transform: rotateX(-45deg) rotateY(225deg) translateY(280px) translateZ(-200px); }
+  }
+
+  @keyframes content{
+    0%,50%{ transform: rotateX(-45deg) rotateY(225deg) translateY(280px) translateY(-1600px); }
+    100%{ transform: rotateX(-45deg) rotateY(225deg) translateY(280px); }
+  }
+  @keyframes outerPack{
+    0%{ transform: rotateX(-45deg) rotateY(225deg) translateY(1600px);  }
+    100%{ transform: rotateX(-45deg) rotateY(225deg); }
+  }
+  @keyframes top{
+    0%,66.6%{ transform: rotateX(-135deg) rotateY(225deg)  translateY(282px) translateY(1600px);}
+    100%{ transform: rotateX(-135deg) rotateY(225deg)  translateY(282px); }
+  }

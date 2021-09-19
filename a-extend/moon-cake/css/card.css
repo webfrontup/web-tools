@@ -1,0 +1,116 @@
+.bg{
+  width: 100vw;
+  height: 100vh;
+  background:#f39c72;
+  padding-top: 140px;
+  font-family: "楷体","楷体_GB2312";
+}
+.bg:before{
+  background-size:cover;
+  background:url(../images/moonCakeBg.png) repeat center;
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  animation:bgMove 10s infinite linear;
+}
+.card{
+  position:absolute;
+  z-index: 4;
+  width:350px;
+  height:600px;
+  left:50%;
+  top:50%;
+  display: none;
+  cursor: pointer;
+  transform:translate(-50%,-50%);
+  background: url(../images/cardBg2.png)no-repeat;
+  background-size:100% 100%;
+  transform-style:preserve-3d;
+  perspective:1700px;
+  background-color:#6375fd;
+  box-shadow:inset 300px 0 50px rgba(0,0,0,.5),0 20px 100px rgba(0,0,0,.5);
+  transition:1s;
+}
+.card:hover{
+  /* perspective:2000px; */
+  box-shadow:inset 20px 0 50px rgba(0,0,0,.5),0 20px 100px rgba(0,0,0,.5);
+}
+.card .imgBox{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-origin:left;
+  background: url(../images/ByteDance.png)no-repeat;
+  background-size:100% 100%;  
+  transition:1s;
+}
+.imgBoxAct{
+  background: url(../images/cardBg1.png)no-repeat!important;
+  background-size:100% 100%!important; 
+  
+}
+.card:hover .imgBox{
+  transform:rotatey(-135deg);
+}
+.card .details{
+  position:absolute;
+  top:0;
+  left:0;
+  box-sizing:border-box;
+  z-index:-1;
+  transition: all .2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  padding: 130px 40px 50px;
+}
+.detailsContent p{
+  font-size: 16px;
+  line-height: 24px;
+  color: #302a28;
+}
+.card .details:hover{
+  transform: scale(1.1);
+  text-shadow:10px 40px 50px #6375fd;
+}
+h3{
+  font-size: 24px;
+  line-height: 24px;
+  color: #2d6da7;
+}
+p{
+  font-size: 14px;
+  line-height: 8px;
+  color: #2d6da7;
+
+}
+.showCard{
+  display: block!important;
+  animation: showCard 1s  linear!important;
+  animation-fill-mode:forwards!important;
+}
+@keyframes bgMove{
+  0%{
+    background-position:0px 0px;
+  }
+   100%{
+    background-position:200px 298px;
+  }
+}
+@keyframes showCard{
+  0%{
+    transform:translate(-80%,140%) scale(1);
+  }
+  70%{
+    transform:translate(-10%,-40%) scale(1.4);
+  }
+   100%{
+    transform:translate(-10%,-50%) scale(1.2);
+  }
+}
+

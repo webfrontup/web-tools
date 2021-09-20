@@ -112,19 +112,39 @@ async function originData(forObj){
     console.log(originArr);
 
     var eleOriginArr = [...originArr];
-
+    await eleOriginArr.map((v,index)=> {
+        v.index = index
+        originObj[v.id] = v;
+    })
+    console.log("originObj: ", originObj);
     await originArr.map((item,i) => {
-         eleOriginArr.map((v)=> {
-            if(item.id==v.id)return
-
-		    if (item.parentId == v.id) {
-				v.child.push(item);
-                console.log("iiii: ", i)
-                eleOriginArr.splice(i,1)
+        var targetObj = originObj[item.id+""]
+        if(targetObj.parentId){
+            var objj = originObj[targetObj.parentId + ""];
+            if (objj) {
+                originArr.splice(i, 1);
+                objj.child.push(targetObj);
 			}
+        }
 
-        })
-	});
+    })
+    console.log("originArr: ", originArr);
+
+
+
+    //await originArr.map((item,i) => {
+    //     eleOriginArr.map((v)=> {
+    //        if(item.id==v.id)return
+
+	//	    if (item.parentId == v.id) {
+	//			v.child.push(item);
+    //            console.log("iiii: ", i)
+    //            eleOriginArr.splice(i,1)
+	//		}
+
+    //    })
+	//});
+
     console.log("eleOriginArr: ", eleOriginArr);
     
 }

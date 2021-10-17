@@ -1,0 +1,41 @@
+/****************************************************************
+ *																*		
+ * 						      代码库							*
+ *                        www.dmaku.com							*
+ *       		  努力创建完善、持续更新插件以及模板			*
+ * 																*
+****************************************************************/
+*{padding:0;margin:0;}
+body{
+	background:#f03200;
+}
+.box{
+	position:relative;
+	max-width:750px;
+	margin:0 auto;
+}
+.box .img01{
+	width:100%;
+}
+.box .drawBtn{
+	position:absolute;
+	width:10rem;
+	height:auto;
+	left:50%;
+	margin-left:-5rem;
+}
+.box1{
+	position:relative;
+	max-width:750px;
+	margin:0 auto;
+}
+.box1 .img01{
+	width:100%;
+}
+.box1 .drawBtn2{
+	position:absolute;
+	width:10rem;
+	height:auto;
+	left:50%;
+	margin-left:-5rem;
+}

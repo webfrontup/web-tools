@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.rawgit.com/blowsie/Pure-JavaScript-HTML5-Parser/master/htmlparser.js"></script>
+    <script src="./html2json.js"></script>
+
+
+    <script src="./htmlparser.js"></script>
+    <script>
+        window.onload = function () {
+            var input = document.getElementById("input");
+            var output = document.getElementById("output");
+            var form = document.getElementById("form");
+
+            let value2 = "<p>hello <b style='test foo' disabled align=\"b\\\"ar\">john <a href='http://ejohn.org/'>resig</b><img src=test.jpg></img><div>test</div><p>hello world";
+            //output.value = "";
+            let value = `
+                <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Document</title>
+                    </head>
+                    \<script\> 
+                        var input = document.getElementById("input");
+                        var output = document.getElementById("output");
+                        var form = document.getElementById("form");
+                    \<\/script\>
+                </html>
+            `
+
+            var str = HTMLtoXML(value);
+            var str2 = html2json(value);
+            var str3 = json2html(str2)
+            console.log("strrrr: ", str)
+            console.log("strrrr2: ", str2)
+            console.log("strrrr3: ", str3)
+            //form.onsubmit = function (e) {
+            //    if (e) e.preventDefault();
+            //    if (typeof event != "undefined") event.returnValue = false;
+
+            //    output.value = HTMLtoXML(input.value);
+            //    return false;
+            //};
+        };
+    </script>
+</body>
+</html>
